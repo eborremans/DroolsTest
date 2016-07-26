@@ -1,0 +1,47 @@
+//created on: Jul 14, 2016
+package com.sample
+
+//list any import classes here.
+import java.util.List;
+
+
+//declare any global variables here
+
+
+rule "I know Eddy"
+salience -10
+    when
+        $person : Person(firstName=="eddy" || firstName=="klaartje")//conditions
+    then
+        System.out.println("Hey, I think I know you: " + $person.getFirstName());
+
+end
+
+rule "I don't know you"
+    //include attributes such as "salience" here...
+salience -10
+    when
+        $person : Person(firstName!="eddy" && firstName!="klaartje")//conditions
+    then
+        System.out.println("Hey, I don't know you: " + $person.getFirstName());
+
+end
+
+rule "Test Number"
+salience 0
+	when
+		$someNumber : Number( doubleValue > 14 )
+	then
+	    System.out.println("someNumber: " + $someNumber);
+	end
+
+rule "Kinderbijslag"
+salience -20
+	when
+		$person : Person(nrOfChildren > 0)
+		$combinedChildrensAge : Number() from accumulate (Person($age : age) from $person.children,
+														  sum($age)) 
+	then
+	    System.out.println($person.getFirstName() + ", you are eligible for kinderbijslag");
+	    System.out.println("combined childrens age: " + $combinedChildrensAge);
+	end

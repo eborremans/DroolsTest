@@ -1,0 +1,55 @@
+//created on: Jul 11, 2016
+package droolsexample
+
+// list any import classes here.
+import com.sample.ItemCity;
+import java.math.BigDecimal; 
+
+import function com.sample.Utility.help;
+
+//declare any global variables here
+dialect "java"
+
+rule "Nagpur Medicine Item"
+   
+   when
+      item : ItemCity(purchaseCity == ItemCity.City.NAGPUR, 
+                      typeofItem == ItemCity.Type.MEDICINES)
+   
+   then
+      BigDecimal tax = new BigDecimal(0.0);
+      item.setLocalTax(tax.multiply(item.getSellPrice())); 
+      help(drools,"added info");
+end
+
+rule "Nagpur Groceries Item"
+   
+   when
+      item : ItemCity(purchaseCity == ItemCity.City.NAGPUR, 
+                      typeofItem == ItemCity.Type.GROCERIES)
+   
+   then
+      BigDecimal tax = new BigDecimal(1.0);
+      item.setLocalTax(tax.multiply(item.getSellPrice())); 
+      help(drools,"info");
+end
+
+rule "Nagpur Fire me!"
+   
+   when
+      item : ItemCity(purchaseCity == ItemCity.City.NAGPUR, 
+                      typeofItem == ItemCity.Type.GROCERIES)
+   
+   then
+      help(drools,"fire me!");
+end
+
+rule "Nagpur Don't fire me!"
+   
+   when
+      item : ItemCity(purchaseCity == ItemCity.City.NAGPUR, 
+                      typeofItem == ItemCity.Type.LUXURYGOODS)
+   
+   then
+      help(drools,"Do not fire me!");
+end
