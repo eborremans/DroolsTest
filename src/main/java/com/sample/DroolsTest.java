@@ -38,11 +38,11 @@ public class DroolsTest {
 	private static void jooqExample() {
 		DataAccess dataAccess = new DataAccess();
 		
-//		Result<ContactsRecord> records = dataAccess.crmDb.selectFrom(Contacts.CONTACTS).fetch();
-//		
-//		for(ContactsRecord record : records) {
-//			System.out.println("Contact found: " + record.getFirstName() + " " + record.getLastName());
-//		}
+		Result<ContactsRecord> records = dataAccess.crmDb.selectFrom(Contacts.CONTACTS).fetch();
+		
+		for(ContactsRecord record : records) {
+			System.out.println("Contact found: " + record.getFirstName() + " " + record.getLastName());
+		}
 			
 	}
 	

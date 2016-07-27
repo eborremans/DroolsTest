@@ -32,16 +32,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.jooq.DSLContext;
-import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
-import org.jooq.impl.DefaultConfiguration;
+import org.springframework.stereotype.Component;
 
-import com.billinghouse.jooq.dentalcrm.tables.Contacts;
 import com.billinghouse.jooq.dentalcrm.tables.interfaces.IContacts;
-import com.billinghouse.jooq.dentalcrm.tables.records.ContactsRecord;
 
+@Component
 public class DataAccess {
 	public DSLContext crmDb = null;
 	public Connection connection = null;
@@ -54,21 +51,21 @@ public class DataAccess {
 
 		// Connection is the only JDBC resource that we need
 		// PreparedStatement and ResultSet are handled by jOOQ, internally
-		try (Connection conn = DriverManager.getConnection(url, userName,
-				password)) {
-			crmDb = DSL.using(conn, SQLDialect.MYSQL);
+		try {
+			connection = DriverManager.getConnection(url, userName,
+					password);
+		
+			crmDb = DSL.using(connection, SQLDialect.MYSQL);
 			
-			Result<ContactsRecord> records = crmDb.selectFrom(Contacts.CONTACTS).fetch();
-			
-			for(ContactsRecord record : records) {
-				System.out.println("Contact found: " + record.getFirstName() + " " + record.getLastName());
-			}
-		}
-
-		catch (SQLException e1) {
+//			Result<ContactsRecord> records = crmDb.selectFrom(Contacts.CONTACTS).fetch();
+//			
+//			for(ContactsRecord record : records) {
+//				System.out.println("Contact found: " + record.getFirstName() + " " + record.getLastName());
+//			}
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			e.printStackTrace();
+		}		
 	}
 
 	public void storeContact(IContacts contact) {
