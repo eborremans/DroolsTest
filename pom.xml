@@ -11,7 +11,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<pojobuilder.version>3.4.0</pojobuilder.version>
 		<!--mysql.version>5.1.38</mysql.version-->
-		<mysql.version>8.0.16</mysql.version>
+		<mysql.version>8.0.28</mysql.version>
 		<jooq.version>3.7.2</jooq.version>
 	</properties>
 
